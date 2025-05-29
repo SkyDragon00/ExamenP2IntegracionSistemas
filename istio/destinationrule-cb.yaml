@@ -1,0 +1,14 @@
+# istio/destinationrule-cb.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: certification-breaker
+  namespace: default
+spec:
+  host: certification-service
+  trafficPolicy:
+    outlierDetection:
+      consecutive5xxErrors: 3
+      interval: 60s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 100
