@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: certification-deployment
+  labels:
+    app: certification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: certification-service
+  template:
+    metadata:
+      labels:
+        app: certification-service
+    spec:
+      containers:
+      - name: certification
+        image: certification-service:latest
+        ports:
+        - containerPort: 8002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: certification-service
+  labels:
+    app: certification-service
+spec:
+  selector:
+    app: certification-service
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8002
